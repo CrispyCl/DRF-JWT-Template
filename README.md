@@ -62,6 +62,12 @@ If the ".env" file is not created, the default values will be used
 cd app
 ```
 
+## Compiling translation files
+
+```bash
+django-admin compilemessages
+```
+
 ## Database Creation
 
 ### Apply migrations

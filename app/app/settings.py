@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
 load_dotenv(override=False)
@@ -101,6 +102,13 @@ AUTHENTICATION_BACKENDS = [
 # Internationalization
 
 LANGUAGE_CODE = "en-us"
+LANGUAGES = (
+    ("en", _("English")),
+    ("ru", _("Russian")),
+)
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]
 
 TIME_ZONE = "UTC"
 USE_I18N = True
@@ -110,3 +118,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = "static/"
+
+
+# Debug mode
+
+if DEBUG:
+    INSTALLED_APPS.append("debug_toolbar")
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
