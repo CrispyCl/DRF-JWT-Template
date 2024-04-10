@@ -52,12 +52,9 @@ class ChangePasswordAPIView(generics.CreateAPIView):
             new_password = serializer.data.get("new_password")
 
             if not user.check_password(password):
-                return Response(
-                    {
-                        "detail": _("Old password is not correct"),
-                    },
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
+                errors = serializer.errors
+                errors["password"] = [_("Old password is not correct")]
+                return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
             user.set_password(new_password)
             user.save()
@@ -66,7 +63,7 @@ class ChangePasswordAPIView(generics.CreateAPIView):
                 user,
             )
             return Response(
-                {"message": _("Password changed successfully")},
+                {"detail": _("Password changed successfully")},
                 status=status.HTTP_200_OK,
             )
 

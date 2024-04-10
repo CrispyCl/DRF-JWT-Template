@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "corsheaders",
     # Project's apps
+    "core.apps.CoreConfig",
     "users.apps.UsersConfig",
 ]
 

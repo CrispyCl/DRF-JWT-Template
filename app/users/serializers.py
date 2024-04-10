@@ -35,22 +35,26 @@ class UserSerializer(serializers.ModelSerializer):
 class ChangePasswordSerializer(serializers.Serializer):
     password = serializers.CharField(
         required=True,
-        style={"input_type": "password", "placeholder": "Old password"},
+        style={"input_type": "password", "placeholder": _("Old password")},
+        label=_("Old Password")
     )
     new_password = serializers.CharField(
         required=True,
-        style={"input_type": "password", "placeholder": "New password"},
+        style={"input_type": "password", "placeholder": _("New password")},
+        label=_("New Password")
     )
     new_password_confirm = serializers.CharField(
         required=True,
-        style={"input_type": "password", "placeholder": "Сonfirm password"},
+        style={"input_type": "password", "placeholder": _("Сonfirm password")},
+        label=_("Confirm New Password")
     )
 
     def validate(self, attrs):
         if attrs["new_password"] != attrs["new_password_confirm"]:
             raise serializers.ValidationError(
                 {
-                    "password": _("Password fields didn't match"),
+                    "new_password": _("Password fields didn't match"),
+                    "new_password_confirm": _("Password fields didn't match"),
                 },
             )
         return attrs
