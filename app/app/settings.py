@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "corsheaders",
+    "drf_yasg",
     # Project's apps
     "core.apps.CoreConfig",
     "users.apps.UsersConfig",
