@@ -27,15 +27,15 @@ class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class UserCurrentAPIView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    queryset = User.objects.all()
+    permission_classes = [permissions.IsAuthenticated, IsSelfOrReadOnly]
     serializer_class = UserSerializer
 
-    def get_queryset(self):
-        return self.request.user
-
-    def get(self, request):
-        serializer = UserSerializer(request.user)
-        return Response(serializer.data)
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        obj = queryset.filter(id=self.request.user.id).first()
+        self.check_object_permissions(self.request, obj)
+        return obj
 
 
 class ChangePasswordAPIView(generics.CreateAPIView):

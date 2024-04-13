@@ -11,5 +11,6 @@ flake8-print
 flake8-quotes
 flake8-return
 flake8-use-pathlib
+parameterized
 pep8-naming
 sort-requirements

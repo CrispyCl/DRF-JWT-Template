@@ -36,17 +36,17 @@ class ChangePasswordSerializer(serializers.Serializer):
     password = serializers.CharField(
         required=True,
         style={"input_type": "password", "placeholder": _("Old password")},
-        label=_("Old Password")
+        label=_("Old Password"),
     )
     new_password = serializers.CharField(
         required=True,
         style={"input_type": "password", "placeholder": _("New password")},
-        label=_("New Password")
+        label=_("New Password"),
     )
     new_password_confirm = serializers.CharField(
         required=True,
         style={"input_type": "password", "placeholder": _("Сonfirm password")},
-        label=_("Confirm New Password")
+        label=_("Confirm New Password"),
     )
 
     def validate(self, attrs):
