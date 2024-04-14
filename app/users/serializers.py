@@ -19,17 +19,20 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
     def update(self, instance, validated_data):
-        password = validated_data.get("password", instance.password)
-        if not instance.check_password(password):
-            raise serializers.ValidationError(
-                {
-                    "password": _("Password is not correct"),
-                },
-            )
         instance.username = validated_data.get("username", instance.username)
         instance.email = validated_data.get("email", instance.email)
         instance.save()
         return instance
+
+    def validate(self, data):
+        if self.instance is not None:
+            if not self.instance.check_password(data.get("password", self.instance.password)):
+                raise serializers.ValidationError(
+                    {
+                        "password": [_("Password is not correct")],
+                    },
+                )
+        return data
 
 
 class ChangePasswordSerializer(serializers.Serializer):
@@ -53,8 +56,8 @@ class ChangePasswordSerializer(serializers.Serializer):
         if attrs["new_password"] != attrs["new_password_confirm"]:
             raise serializers.ValidationError(
                 {
-                    "new_password": _("Password fields didn't match"),
-                    "new_password_confirm": _("Password fields didn't match"),
+                    "new_password": [_("Password fields didn't match")],
+                    "new_password_confirm": [_("Password fields didn't match")],
                 },
             )
         return attrs
